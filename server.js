@@ -8,6 +8,8 @@ const morgan = require("morgan");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const userRouter = require("./routes/user");
+const notesRouter = require("./routes/notes");
+const auth = require("./middleware/auth");
 
 /////////////////////////////
 // GLOBALS & ROUTERS
@@ -55,6 +57,12 @@ app.use(morgan("tiny"));
 ///////////////////////
 
 app.use("/user", userRouter);
+
+app.use("/note", notesRouter);
+
+app.all("/test", auth, (req, res) => {
+  res.json(req.payload);
+});
 
 /////////////////////////////
 //LISTENER
