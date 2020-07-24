@@ -20,9 +20,9 @@ const create = async (req, res) => {
     req.body.token = jwt.sign({ username }, SECRET, {
       expiresIn: 60 * 60 * 24 * 14,
     });
-    console.log(req.body);
+
     const newUser = await User.create(req.body);
-    console.log(newUser);
+
     res.status(200).json(newUser);
   } catch (err) {
     res.status(400).json({ err });
@@ -52,22 +52,22 @@ const destroy = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    console.count("login");
+
     const { username, password } = req.body;
-    console.count("login");
+
     const foundUser = await User.findOne({ username });
-    console.count("login");
+
     const match = await bcrypt.compare(password, foundUser.password);
-    console.count("login");
+
 
     if (match) {
       try {
         const { token, _id } = foundUser;
-        console.count("login");
+
         const payload = jwt.verify(token, SECRET);
-        console.count("login");
+
         res.status(200).json({ username, token, _id });
-        console.count("login");
+
       } catch (err) {
         foundUser.token = jwt.sign({ username }, SECRET, {
           expiresIn: 60 * 60 * 24 * 14,
