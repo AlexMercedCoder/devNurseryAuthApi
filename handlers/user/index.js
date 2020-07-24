@@ -15,17 +15,14 @@ const SECRET = process.env.SECRET;
 
 const create = async (req, res) => {
   try {
-    console.count();
     const { username } = req.body;
-    console.count();
     req.body.password = await bcrypt.hash(req.body.password, 10);
-    console.count();
     req.body.token = jwt.sign({ username }, SECRET, {
       expiresIn: 60 * 60 * 24 * 14,
     });
-    console.count();
+    console.log(req.body);
     const newUser = await User.create(req.body);
-    console.count();
+    console.log(newUser);
     res.status(200).json(newUser);
   } catch (err) {
     res.status(400).json({ err });
