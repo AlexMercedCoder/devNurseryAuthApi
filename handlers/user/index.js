@@ -52,15 +52,22 @@ const destroy = async (req, res) => {
 
 const login = async (req, res) => {
   try {
+    console.count("login");
     const { username, password } = req.body;
+    console.count("login");
     const foundUser = await User.findOne({ username });
+    console.count("login");
     const match = await bcrypt.compare(password, foundUser.password);
+    console.count("login");
 
     if (match) {
       try {
         const { token, _id } = foundUser;
+        console.count("login");
         const payload = jwt.verify(token, SECRET);
+        console.count("login");
         res.status(200).json({ username, token, _id });
+        console.count("login");
       } catch (err) {
         foundUser.token = jwt.sign({ username }, SECRET, {
           expiresIn: 60 * 60 * 24 * 14,
