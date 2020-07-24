@@ -22,7 +22,10 @@ const mongoConfigObject = { useNewUrlParser: true, useUnifiedTopology: true }; /
 ////////////////////////////////////
 //CORS CONFIGURATIONS
 ////////////////////////////////////
-const whitelist = ["http://example1.com", "http://example2.com"];
+const whitelist = [
+  "http://member.devnursery.com",
+  "https://member.devnursery.com",
+];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
